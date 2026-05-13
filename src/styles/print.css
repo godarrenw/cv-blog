@@ -28,9 +28,9 @@
   a {
     color: #000000 !important;
     text-decoration: none !important;
+    border-bottom: none !important;
   }
 
-  /* External links: show URL inline */
   a[href^="http"]::after {
     content: " (" attr(href) ")";
     font-size: 8.5pt;
@@ -41,14 +41,15 @@
   h1 {
     font-size: 18pt;
     margin: 0 0 4pt;
+    color: #000 !important;
   }
 
   h2 {
     font-size: 13pt;
     margin: 10pt 0 4pt;
     padding-bottom: 2pt;
-    border-bottom: 0.6pt solid #006847;
-    color: #006847 !important;
+    border-bottom: 0.6pt solid #006600;
+    color: #006600 !important;
     break-after: avoid;
   }
 

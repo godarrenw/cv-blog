@@ -16,13 +16,17 @@ const { title, description } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#faf9f5" />
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body>
     <Nav />
-    <main class="mx-auto max-w-3xl px-6 py-10 lg:py-14">
+    <main
+      class="mx-auto px-6 py-16 lg:py-20"
+      style="max-width: 680px;"
+    >
       <slot />
     </main>
     <Footer />

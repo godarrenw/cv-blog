@@ -13,64 +13,80 @@ function isActive(href: string) {
 }
 ---
 
-<header class="no-print sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-rule">
-  <nav class="mx-auto max-w-3xl px-6 flex items-center justify-between h-14">
-    <a href="/" class="font-semibold text-ink hover:no-underline hover:text-sysu-green text-base">
+<header
+  class="no-print sticky top-0 z-50"
+  style="background: var(--color-bg); border-bottom: 1px solid var(--color-rule);"
+>
+  <nav
+    class="mx-auto px-6 flex items-center justify-between h-14"
+    style="max-width: 880px;"
+  >
+    <a
+      href="/"
+      class="font-display text-sm font-500 tracking-wide"
+      style="font-family: var(--font-display); font-weight: 500; color: var(--color-ink); border-bottom: none; letter-spacing: 0.01em;"
+    >
       朱奕樟
     </a>
 
-    <!-- 桌面端链接 -->
-    <div class="hidden md:flex items-center gap-6">
+    <!-- 桌面端 -->
+    <div class="hidden md:flex items-center gap-7">
       {links.map(({ href, label }) => (
         <a
           href={href}
-          class={`text-sm transition-colors hover:no-underline ${
-            isActive(href)
-              ? "text-sysu-green border-b-2 border-sysu-green pb-0.5"
-              : "text-ink-muted hover:text-ink"
-          }`}
+          style={`font-family: var(--font-display); font-size: 13px; letter-spacing: 0.02em; border-bottom: none; transition: color 200ms ease; color: ${isActive(href) ? "var(--color-ink)" : "var(--color-ink-muted)"};`}
         >
-          {label}
+          {isActive(href) ? (
+            <span style="position: relative; display: inline-block;">
+              {label}
+              <span
+                style="position: absolute; bottom: -2px; left: 0; width: 16px; height: 2px; background: var(--color-accent); border-radius: 1px;"
+              ></span>
+            </span>
+          ) : label}
         </a>
       ))}
       <button
         id="cv-btn"
-        class="text-sm border border-sysu-green text-sysu-green rounded px-3 py-1 hover:bg-sysu-green-50 transition-colors"
+        style="font-family: var(--font-display); font-size: 13px; border: 1px solid var(--color-accent); color: var(--color-accent); border-radius: 6px; padding: 4px 14px; background: transparent; cursor: pointer; transition: background 200ms ease, color 200ms ease; letter-spacing: 0.01em;"
+        onmouseover="this.style.background='var(--color-accent-soft)'"
+        onmouseout="this.style.background='transparent'"
       >
         CV
       </button>
     </div>
 
-    <!-- 移动端汉堡按钮 -->
+    <!-- 移动端汉堡 -->
     <button
       id="menu-btn"
       class="md:hidden flex flex-col gap-1.5 p-1"
       aria-label="菜单"
+      style="background: none; border: none; cursor: pointer;"
     >
-      <span class="block w-5 h-0.5 bg-ink"></span>
-      <span class="block w-5 h-0.5 bg-ink"></span>
-      <span class="block w-5 h-0.5 bg-ink"></span>
+      <span style="display: block; width: 20px; height: 1.5px; background: var(--color-ink);"></span>
+      <span style="display: block; width: 20px; height: 1.5px; background: var(--color-ink);"></span>
+      <span style="display: block; width: 20px; height: 1.5px; background: var(--color-ink);"></span>
     </button>
   </nav>
 
   <!-- 移动端菜单 -->
-  <div id="mobile-menu" class="hidden md:hidden border-t border-rule bg-white">
-    <div class="mx-auto max-w-3xl px-6 py-3 flex flex-col gap-3">
+  <div
+    id="mobile-menu"
+    class="hidden md:hidden"
+    style="border-top: 1px solid var(--color-rule); background: var(--color-bg);"
+  >
+    <div class="mx-auto px-6 py-4 flex flex-col gap-4" style="max-width: 880px;">
       {links.map(({ href, label }) => (
         <a
           href={href}
-          class={`text-sm py-1 ${
-            isActive(href)
-              ? "text-sysu-green font-medium"
-              : "text-ink-muted"
-          }`}
+          style={`font-family: var(--font-display); font-size: 13px; letter-spacing: 0.02em; border-bottom: none; color: ${isActive(href) ? "var(--color-accent)" : "var(--color-ink-muted)"};`}
         >
           {label}
         </a>
       ))}
       <button
         id="cv-btn-mobile"
-        class="text-sm border border-sysu-green text-sysu-green rounded px-3 py-1.5 w-fit hover:bg-sysu-green-50 transition-colors"
+        style="font-family: var(--font-display); font-size: 13px; border: 1px solid var(--color-accent); color: var(--color-accent); border-radius: 6px; padding: 6px 14px; background: transparent; cursor: pointer; width: fit-content;"
       >
         CV
       </button>

@@ -15,31 +15,58 @@ const allPubs = await getCollection("publications");
 const recentPubs = allPubs.sort((a, b) => b.data.year - a.data.year).slice(0, 3);
 ---
 
-<Base title="朱奕樟 — 博士主页" description="朱奕樟个人学术主页，中山大学博士研究生，方向为PHM与量化交易。">
-  <div class="relative">
-    <div class="absolute right-0 top-0 no-print">
-      <PrintButton />
+<Base
+  title="朱奕樟 — 博士主页"
+  description="朱奕樟个人学术主页，中山大学博士研究生，方向为PHM与量化交易。"
+>
+  <!-- Hero -->
+  <section style="padding-bottom: 4rem; max-width: 880px; margin-left: auto; margin-right: auto;">
+    <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 2rem; flex-wrap: wrap;">
+      <div style="flex: 1; min-width: 260px;">
+        <h1
+          style="font-family: var(--font-display); font-size: clamp(2.4rem, 6vw, 3.4rem); font-weight: 500; color: var(--color-ink); letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 0.75rem;"
+        >
+          朱奕樟
+        </h1>
+        <p
+          style="font-family: var(--font-serif); font-size: 17px; font-style: italic; color: var(--color-ink-muted); margin: 0; line-height: 1.5;"
+        >
+          中山大学 · 博士研究生
+        </p>
+      </div>
+      <div class="no-print" style="padding-top: 0.5rem; flex-shrink: 0;">
+        <PrintButton label="下载 CV" variant="solid" />
+      </div>
     </div>
 
-    <section class="mb-12">
-      <h1 class="text-4xl font-bold text-ink tracking-tight">朱奕樟</h1>
-      <p class="mt-2 text-lg text-sysu-green font-medium">
-        中山大学 · 博士研究生 · 量化交易 / 数据建模 / PHM
-      </p>
-      <p class="mt-4 text-ink leading-relaxed max-w-2xl">
-        我是中山大学在读博士研究生，研究方向涵盖预测性维护（PHM）、时序数据建模与量化交易策略。
-        致力于将深度学习与信号处理方法结合，解决工业传感器数据中的故障预测问题。
-        同时探索数据驱动方法在金融市场中的应用，持续推动理论研究向工程实践转化。
-      </p>
-    </section>
+    <p
+      style="font-family: var(--font-serif); font-size: 17px; line-height: 1.75; color: var(--color-ink); margin: 2.25rem 0 0; max-width: 600px;"
+    >
+      研究方向涵盖预测性维护（PHM）、时序数据建模与量化交易策略。
+      致力于将深度学习与信号处理方法结合，解决工业传感器数据中的故障预测问题；
+      同时探索数据驱动方法在金融市场中的应用。
+    </p>
+  </section>
 
-    <section class="mb-12">
-      <h2 class="text-xl font-semibold text-ink border-b border-sysu-green pb-1 mb-6">
+  <!-- 精选项目 -->
+  <section style="padding: 4rem 0;">
+    <header style="margin-bottom: 2rem;">
+      <p
+        style="font-family: var(--font-display); font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-ink-muted); margin: 0 0 0.5rem;"
+      >
+        § 01
+      </p>
+      <h2
+        style="font-family: var(--font-display); font-size: 15px; font-weight: 600; color: var(--color-ink); margin: 0; letter-spacing: 0.02em; text-transform: uppercase;"
+      >
         精选项目
       </h2>
-      {featuredProjects.length > 0 ? (
-        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {featuredProjects.map((project) => (
+    </header>
+
+    {featuredProjects.length > 0 ? (
+      <div style="border-top: 1px solid var(--color-rule);">
+        {featuredProjects.map((project, i) => (
+          <div style="border-bottom: 1px solid var(--color-rule);">
             <ProjectCard
               href={`/projects/${project.id}`}
               title={project.data.title}
@@ -47,46 +74,93 @@ const recentPubs = allPubs.sort((a, b) => b.data.year - a.data.year).slice(0, 3)
               year={project.data.year}
               tags={project.data.tags}
               cover={project.data.cover}
+              index={i}
             />
-          ))}
-        </div>
-      ) : (
-        <p class="text-ink-muted">项目正在整理中，敬请期待。</p>
-      )}
-    </section>
+          </div>
+        ))}
+      </div>
+    ) : (
+      <p style="font-family: var(--font-serif); font-style: italic; color: var(--color-ink-muted); font-size: 15px;">
+        项目正在整理中，敬请期待。
+      </p>
+    )}
 
-    <section class="mb-12">
-      <h2 class="text-xl font-semibold text-ink border-b border-sysu-green pb-1 mb-6">
-        最新论文
-      </h2>
-      {recentPubs.length > 0 ? (
-        <ul class="space-y-4">
-          {recentPubs.map((pub) => (
-            <li>
-              <PubItem
-                title={pub.data.title}
-                authors={pub.data.authors}
-                venue={pub.data.venue}
-                year={pub.data.year}
-                pdf={pub.data.pdf}
-                doi={pub.data.doi}
-                status={pub.data.status}
-              />
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p class="text-ink-muted">博士期间论文正在准备中。</p>
-      )}
-    </section>
-
-    <div class="mt-8">
+    <div style="margin-top: 1.75rem;">
       <a
-        href="/about"
-        class="inline-flex items-center gap-1 text-sysu-green font-medium hover:underline"
+        href="/projects"
+        style="font-family: var(--font-display); font-size: 13px; font-weight: 500; color: var(--color-accent); letter-spacing: 0.02em; border-bottom: none; transition: opacity 200ms ease;"
+        onmouseover="this.style.opacity='0.75'"
+        onmouseout="this.style.opacity='1'"
       >
-        了解更多关于我 →
+        → 查看完整项目列表
       </a>
     </div>
-  </div>
+  </section>
+
+  <!-- 最新论文 -->
+  <section style="padding: 4rem 0;">
+    <header style="margin-bottom: 2rem;">
+      <p
+        style="font-family: var(--font-display); font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-ink-muted); margin: 0 0 0.5rem;"
+      >
+        § 02
+      </p>
+      <h2
+        style="font-family: var(--font-display); font-size: 15px; font-weight: 600; color: var(--color-ink); margin: 0; letter-spacing: 0.02em; text-transform: uppercase;"
+      >
+        最新论文
+      </h2>
+    </header>
+
+    {recentPubs.length > 0 ? (
+      <div>
+        {recentPubs.map((pub) => (
+          <PubItem
+            title={pub.data.title}
+            authors={pub.data.authors}
+            venue={pub.data.venue}
+            year={pub.data.year}
+            pdf={pub.data.pdf}
+            doi={pub.data.doi}
+            status={pub.data.status}
+          />
+        ))}
+      </div>
+    ) : (
+      <p style="font-family: var(--font-serif); font-style: italic; color: var(--color-ink-muted); font-size: 15px; padding: 1.25rem 0; border-top: 1px solid var(--color-rule); border-bottom: 1px solid var(--color-rule);">
+        博士期间论文正在准备中。
+      </p>
+    )}
+
+    <div style="margin-top: 1.75rem;">
+      <a
+        href="/publications"
+        style="font-family: var(--font-display); font-size: 13px; font-weight: 500; color: var(--color-accent); letter-spacing: 0.02em; border-bottom: none; transition: opacity 200ms ease;"
+        onmouseover="this.style.opacity='0.75'"
+        onmouseout="this.style.opacity='1'"
+      >
+        → 查看全部论文
+      </a>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="padding: 4rem 0 2rem; border-top: 1px solid var(--color-rule); display: flex; gap: 2.5rem; flex-wrap: wrap;">
+    <a
+      href="/about"
+      style="font-family: var(--font-display); font-size: 14px; font-weight: 500; color: var(--color-accent); letter-spacing: 0.02em; border-bottom: none; transition: opacity 200ms ease;"
+      onmouseover="this.style.opacity='0.75'"
+      onmouseout="this.style.opacity='1'"
+    >
+      → 关于我
+    </a>
+    <a
+      href="mailto:zhuyizhang0@gmail.com"
+      style="font-family: var(--font-display); font-size: 14px; font-weight: 500; color: var(--color-accent); letter-spacing: 0.02em; border-bottom: none; transition: opacity 200ms ease;"
+      onmouseover="this.style.opacity='0.75'"
+      onmouseout="this.style.opacity='1'"
+    >
+      → 联系我
+    </a>
+  </section>
 </Base>
