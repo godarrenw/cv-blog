@@ -1,0 +1,94 @@
+---
+const pathname = Astro.url.pathname;
+
+const links = [
+  { href: "/about", label: "About" },
+  { href: "/publications", label: "Publications" },
+  { href: "/projects", label: "Projects" },
+  { href: "/awards", label: "Awards" },
+];
+
+function isActive(href: string) {
+  return pathname === href || pathname.startsWith(href + "/");
+}
+---
+
+<header class="no-print sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-rule">
+  <nav class="mx-auto max-w-3xl px-6 flex items-center justify-between h-14">
+    <a href="/" class="font-semibold text-ink hover:no-underline hover:text-sysu-green text-base">
+      朱奕樟
+    </a>
+
+    <!-- 桌面端链接 -->
+    <div class="hidden md:flex items-center gap-6">
+      {links.map(({ href, label }) => (
+        <a
+          href={href}
+          class={`text-sm transition-colors hover:no-underline ${
+            isActive(href)
+              ? "text-sysu-green border-b-2 border-sysu-green pb-0.5"
+              : "text-ink-muted hover:text-ink"
+          }`}
+        >
+          {label}
+        </a>
+      ))}
+      <button
+        id="cv-btn"
+        class="text-sm border border-sysu-green text-sysu-green rounded px-3 py-1 hover:bg-sysu-green-50 transition-colors"
+      >
+        CV
+      </button>
+    </div>
+
+    <!-- 移动端汉堡按钮 -->
+    <button
+      id="menu-btn"
+      class="md:hidden flex flex-col gap-1.5 p-1"
+      aria-label="菜单"
+    >
+      <span class="block w-5 h-0.5 bg-ink"></span>
+      <span class="block w-5 h-0.5 bg-ink"></span>
+      <span class="block w-5 h-0.5 bg-ink"></span>
+    </button>
+  </nav>
+
+  <!-- 移动端菜单 -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-rule bg-white">
+    <div class="mx-auto max-w-3xl px-6 py-3 flex flex-col gap-3">
+      {links.map(({ href, label }) => (
+        <a
+          href={href}
+          class={`text-sm py-1 ${
+            isActive(href)
+              ? "text-sysu-green font-medium"
+              : "text-ink-muted"
+          }`}
+        >
+          {label}
+        </a>
+      ))}
+      <button
+        id="cv-btn-mobile"
+        class="text-sm border border-sysu-green text-sysu-green rounded px-3 py-1.5 w-fit hover:bg-sysu-green-50 transition-colors"
+      >
+        CV
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  document.getElementById("menu-btn")?.addEventListener("click", () => {
+    const menu = document.getElementById("mobile-menu");
+    menu?.classList.toggle("hidden");
+  });
+
+  document.getElementById("cv-btn")?.addEventListener("click", () => {
+    window.print();
+  });
+
+  document.getElementById("cv-btn-mobile")?.addEventListener("click", () => {
+    window.print();
+  });
+</script>

@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+@theme {
+  --color-sysu-green: #006847;
+  --color-sysu-green-50: #e8f3ee;
+  --color-sysu-green-700: #00533a;
+  --color-ink: #1f2937;
+  --color-ink-muted: #6b7280;
+  --color-rule: #e5e7eb;
+
+  --font-sans:
+    "PingFang SC", "Source Han Sans SC", "Source Han Sans CN",
+    "Microsoft YaHei", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-serif:
+    "Noto Serif SC", "Source Han Serif SC", "Songti SC", "SimSun", serif;
+}
+
+html {
+  background: #ffffff;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: #ffffff;
+}
+
+a {
+  color: var(--color-sysu-green);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--color-sysu-green-700);
+  text-underline-offset: 3px;
+}
+
+::selection {
+  background: var(--color-sysu-green-50);
+  color: var(--color-sysu-green-700);
+}
+
+@import "./print.css";

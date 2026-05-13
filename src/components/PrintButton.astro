@@ -1,0 +1,20 @@
+---
+interface Props {
+  label?: string;
+}
+
+const { label = "下载 CV PDF" } = Astro.props;
+---
+
+<button
+  id="print-btn"
+  class="border border-sysu-green text-sysu-green rounded-md px-5 py-2 text-sm font-medium hover:bg-sysu-green-50 transition-colors"
+>
+  {label}
+</button>
+
+<script>
+  document.getElementById("print-btn")?.addEventListener("click", () => {
+    window.print();
+  });
+</script>

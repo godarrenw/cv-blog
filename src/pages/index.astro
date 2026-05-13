@@ -1,0 +1,92 @@
+---
+import Base from "../layouts/Base.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import PubItem from "../components/PubItem.astro";
+import PrintButton from "../components/PrintButton.astro";
+import { getCollection } from "astro:content";
+
+const allProjects = await getCollection("projects");
+const featuredProjects = allProjects
+  .filter((p) => p.data.featured)
+  .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99))
+  .slice(0, 3);
+
+const allPubs = await getCollection("publications");
+const recentPubs = allPubs.sort((a, b) => b.data.year - a.data.year).slice(0, 3);
+---
+
+<Base title="朱奕樟 — 博士主页" description="朱奕樟个人学术主页，中山大学博士研究生，方向为PHM与量化交易。">
+  <div class="relative">
+    <div class="absolute right-0 top-0 no-print">
+      <PrintButton />
+    </div>
+
+    <section class="mb-12">
+      <h1 class="text-4xl font-bold text-ink tracking-tight">朱奕樟</h1>
+      <p class="mt-2 text-lg text-sysu-green font-medium">
+        中山大学 · 博士研究生 · 量化交易 / 数据建模 / PHM
+      </p>
+      <p class="mt-4 text-ink leading-relaxed max-w-2xl">
+        我是中山大学在读博士研究生，研究方向涵盖预测性维护（PHM）、时序数据建模与量化交易策略。
+        致力于将深度学习与信号处理方法结合，解决工业传感器数据中的故障预测问题。
+        同时探索数据驱动方法在金融市场中的应用，持续推动理论研究向工程实践转化。
+      </p>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="text-xl font-semibold text-ink border-b border-sysu-green pb-1 mb-6">
+        精选项目
+      </h2>
+      {featuredProjects.length > 0 ? (
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {featuredProjects.map((project) => (
+            <ProjectCard
+              href={`/projects/${project.id}`}
+              title={project.data.title}
+              summary={project.data.summary}
+              year={project.data.year}
+              tags={project.data.tags}
+              cover={project.data.cover}
+            />
+          ))}
+        </div>
+      ) : (
+        <p class="text-ink-muted">项目正在整理中，敬请期待。</p>
+      )}
+    </section>
+
+    <section class="mb-12">
+      <h2 class="text-xl font-semibold text-ink border-b border-sysu-green pb-1 mb-6">
+        最新论文
+      </h2>
+      {recentPubs.length > 0 ? (
+        <ul class="space-y-4">
+          {recentPubs.map((pub) => (
+            <li>
+              <PubItem
+                title={pub.data.title}
+                authors={pub.data.authors}
+                venue={pub.data.venue}
+                year={pub.data.year}
+                pdf={pub.data.pdf}
+                doi={pub.data.doi}
+                status={pub.data.status}
+              />
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="text-ink-muted">博士期间论文正在准备中。</p>
+      )}
+    </section>
+
+    <div class="mt-8">
+      <a
+        href="/about"
+        class="inline-flex items-center gap-1 text-sysu-green font-medium hover:underline"
+      >
+        了解更多关于我 →
+      </a>
+    </div>
+  </div>
+</Base>

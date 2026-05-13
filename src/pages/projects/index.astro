@@ -1,0 +1,29 @@
+---
+import Base from "../../layouts/Base.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+import { getCollection } from "astro:content";
+
+const projects = await getCollection("projects");
+const sorted = projects.sort((a, b) => b.data.year - a.data.year);
+---
+
+<Base title="项目" description="朱奕樟的研究与工程项目列表。">
+  <h1 class="text-3xl font-bold text-ink mb-8">项目</h1>
+
+  {sorted.length === 0 ? (
+    <p class="text-ink-muted py-8">项目正在整理中，敬请期待。</p>
+  ) : (
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {sorted.map((project) => (
+        <ProjectCard
+          href={`/projects/${project.id}`}
+          title={project.data.title}
+          summary={project.data.summary}
+          year={project.data.year}
+          tags={project.data.tags}
+          cover={project.data.cover}
+        />
+      ))}
+    </div>
+  )}
+</Base>

@@ -1,0 +1,61 @@
+---
+interface Props {
+  title: string;
+  authors: string;
+  venue: string;
+  year: number;
+  pdf?: string;
+  doi?: string;
+  status: string;
+}
+
+const { title, authors, venue, year, pdf, doi, status } = Astro.props;
+
+const statusColor =
+  status === "in-prep"
+    ? "bg-orange-50 text-orange-600"
+    : status === "published"
+    ? "bg-sysu-green-50 text-sysu-green"
+    : "bg-gray-100 text-ink-muted";
+
+const statusLabel: Record<string, string> = {
+  "in-prep": "草稿",
+  published: "已发表",
+  accepted: "已录用",
+  submitted: "审稿中",
+};
+---
+
+<div class="py-4 border-b border-rule last:border-b-0">
+  <div class="flex items-start justify-between gap-3">
+    <p class="font-semibold text-ink leading-snug">{title}</p>
+    <span class={`text-xs px-2 py-0.5 rounded shrink-0 mt-0.5 ${statusColor}`}>
+      {statusLabel[status] ?? status}
+    </span>
+  </div>
+  <p class="mt-1 text-sm text-ink-muted">{authors}</p>
+  <p class="mt-0.5 text-sm">
+    <em class="text-ink-muted">{venue}</em>
+    <span class="text-ink-muted ml-1">· {year}</span>
+  </p>
+  {(pdf || doi) && (
+    <div class="mt-2 flex gap-3">
+      {pdf && (
+        <a href={pdf} target="_blank" rel="noopener" class="text-xs flex items-center gap-1 text-sysu-green hover:underline">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h4a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+          </svg>
+          PDF
+        </a>
+      )}
+      {doi && (
+        <a href={`https://doi.org/${doi}`} target="_blank" rel="noopener" class="text-xs flex items-center gap-1 text-sysu-green hover:underline">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+          </svg>
+          DOI
+        </a>
+      )}
+    </div>
+  )}
+</div>

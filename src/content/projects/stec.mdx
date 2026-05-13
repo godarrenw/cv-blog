@@ -1,0 +1,27 @@
+---
+title: "STEC — 海上风速时空预测"
+summary: "面向东海多点位风速预测的轻量时空状态空间模型，4 字命名 (STMamba-F → ST-SSM-F → STEC)。"
+year: 2026
+tags: ["时空建模", "风速预测", "SSM"]
+repo: "https://github.com/zhuyizhang0/stec"
+featured: true
+order: 1
+---
+
+## 研究背景
+
+海上风电场的精准风速预测对于电网调度与风机控制至关重要。东海多点位风速具有高度时空相关性，传统 LSTM/Transformer 方案在长序列建模上计算开销偏大，难以在边缘部署场景中实时推理。
+
+## 模型思路
+
+STEC 以 Mamba 状态空间模型（SSM）为核心时序编码器，通过图卷积网络捕获空间站点间的拓扑相关性，将时序特征与空间特征在隐空间中融合，实现轻量级时空联合建模。模型名称沿革：STMamba-F → ST-SSM-F → **STEC**（4 字简称）。
+
+## 当前进展
+
+- 最佳随机种子 `seed=33`，平均 MAE **1.639 m/s**
+- 正在对比消融：纯 SSM baseline vs. 图融合 vs. 完整 STEC
+- 代码与实验日志已托管于 GitHub（见上方 repo 链接）
+
+## 延伸阅读
+
+详细实验记录与可视化结果见博客：[https://blog.20020606.xyz/stmamba-wind-prediction](https://blog.20020606.xyz/stmamba-wind-prediction)

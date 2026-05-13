@@ -1,0 +1,83 @@
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm 14mm;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 10pt;
+    line-height: 1.38;
+  }
+
+  nav,
+  footer,
+  .no-print,
+  .print-hidden {
+    display: none !important;
+  }
+
+  main {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  a {
+    color: #000000 !important;
+    text-decoration: none !important;
+  }
+
+  /* External links: show URL inline */
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 8.5pt;
+    color: #555;
+    word-break: break-all;
+  }
+
+  h1 {
+    font-size: 18pt;
+    margin: 0 0 4pt;
+  }
+
+  h2 {
+    font-size: 13pt;
+    margin: 10pt 0 4pt;
+    padding-bottom: 2pt;
+    border-bottom: 0.6pt solid #006847;
+    color: #006847 !important;
+    break-after: avoid;
+  }
+
+  h3 {
+    font-size: 11pt;
+    margin: 6pt 0 2pt;
+    break-after: avoid;
+  }
+
+  section,
+  article {
+    break-inside: avoid-page;
+  }
+
+  ul,
+  ol {
+    margin: 2pt 0 4pt 18pt;
+  }
+
+  li {
+    margin: 0;
+  }
+
+  .print-block {
+    display: block !important;
+  }
+
+  img {
+    max-width: 100%;
+    break-inside: avoid;
+  }
+}

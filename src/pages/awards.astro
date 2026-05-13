@@ -1,0 +1,32 @@
+---
+import Base from "../layouts/Base.astro";
+import { getCollection } from "astro:content";
+
+const items = await getCollection("awards");
+const sorted = items.sort((a, b) => b.data.year - a.data.year);
+---
+
+<Base title="荣誉" description="朱奕樟获得的奖项与荣誉列表。">
+  <h1 class="text-3xl font-bold text-ink mb-8">荣誉</h1>
+
+  {sorted.length === 0 ? (
+    <p class="text-ink-muted py-8">奖项信息正在整理中，敬请期待。</p>
+  ) : (
+    <ul class="space-y-4">
+      {sorted.map((item) => (
+        <li class="flex items-start gap-6 py-3 border-b border-rule last:border-0">
+          <span class="shrink-0 w-12 text-ink-muted text-sm font-mono pt-0.5">
+            {item.data.year}
+          </span>
+          <div>
+            <p class="font-semibold text-ink">{item.data.title}</p>
+            <p class="text-sm text-ink-muted mt-0.5">{item.data.issuer}</p>
+            {item.data.note && (
+              <p class="text-sm text-ink-muted mt-1 italic">{item.data.note}</p>
+            )}
+          </div>
+        </li>
+      ))}
+    </ul>
+  )}
+</Base>

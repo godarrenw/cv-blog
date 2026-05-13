@@ -1,0 +1,26 @@
+---
+title: "PHM-Benchmark — 先进制造故障预测基准"
+summary: "面向 PHM-EU-2026、PHM-2025 喷气发动机、PHMAP-2023 航天器等公开赛道的统一基准与可复现实验框架。"
+year: 2026
+tags: ["PHM", "基准评测", "先进制造"]
+repo: "https://github.com/zhuyizhang0/phm-benchmark"
+featured: true
+order: 2
+---
+
+## 项目简介
+
+PHM-Benchmark 由 **冯建设** 老师（AI Cube Lab，ai.sysu-sam.com）指导，目标是为多个公开 PHM（预测与健康管理）竞赛赛道建立统一的数据预处理、特征工程与模型评测框架，保证实验可复现。
+
+## 当前优先赛道
+
+- **PHM-EU-2026**（进行中，优先级最高）
+- PHM-2025 喷气发动机轴承寿命预测
+- PHMAP-2023 航天器异常检测
+
+## 框架设计
+
+- 统一数据加载接口，支持多赛道无缝切换
+- 模块化特征管道：时域统计量 → 频域特征 → 深度特征
+- 基线模型覆盖：XGBoost、LSTM、Transformer、Mamba-SSM
+- 自动化评测脚本，输出标准化指标报告（RMSE、MAE、RUL 误差分布）

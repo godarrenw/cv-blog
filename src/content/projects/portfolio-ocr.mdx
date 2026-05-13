@@ -1,0 +1,31 @@
+---
+title: "Portfolio-OCR — 多券商持仓 OCR 与净值聚合"
+summary: "对接 Ghostfolio + 自建 Yahoo Finance 代理 + FastAPI OCR 服务，聚合多券商截图为统一净值视图。"
+year: 2025
+tags: ["量化", "OCR", "系统"]
+featured: false
+order: 5
+---
+
+## 系统架构
+
+```
+截图上传 → FastAPI OCR (port 8080) → 结构化持仓数据
+                                          ↓
+                               Ghostfolio (port 8001, Docker)
+                                          ↓
+                            Yahoo Finance 代理 (port 443)
+                            └── Twelve Data API 兜底报价
+```
+
+## 核心组件
+
+- **FastAPI OCR 服务**（systemd: `portfolio-ocr`）：识别券商截图，输出标准化持仓 JSON
+- **Ghostfolio**（Docker 容器）：持仓管理与净值计算，4 家券商共用同一 token/账户
+- **Yahoo Finance 代理**（systemd: `yf_proxy`）：拦截 `yahoo-finance2` 请求，转发至 Twelve Data，规避封锁
+
+## 关键设计决策
+
+- Docker `extra_hosts` 将 Yahoo Finance 域名指向本机代理（172.17.0.1）
+- 代理进程通过 `setcap cap_net_bind_service` 绑定 443 端口，无需 root
+- 模块级 crumb 缓存问题：crumb 获取失败后需重启 Ghostfolio 容器清除缓存

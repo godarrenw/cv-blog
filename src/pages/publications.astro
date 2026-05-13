@@ -1,0 +1,53 @@
+---
+import Base from "../layouts/Base.astro";
+import PubItem from "../components/PubItem.astro";
+import { getCollection } from "astro:content";
+
+const pubs = await getCollection("publications");
+
+const byYear: Record<number, typeof pubs> = {};
+for (const pub of pubs) {
+  const y = pub.data.year;
+  if (!byYear[y]) byYear[y] = [];
+  byYear[y].push(pub);
+}
+const years = Object.keys(byYear)
+  .map(Number)
+  .sort((a, b) => b - a);
+---
+
+<Base title="论文" description="朱奕樟发表与在投学术论文列表。">
+  <h1 class="text-3xl font-bold text-ink mb-8">论文</h1>
+
+  {pubs.length === 0 ? (
+    <div class="py-16 text-center text-ink-muted leading-relaxed">
+      <p class="text-lg font-medium">博士期间论文正在准备中，敬请期待。</p>
+      <p class="mt-2 text-sm">相关研究成果将在此陆续更新。</p>
+    </div>
+  ) : (
+    <div class="space-y-12">
+      {years.map((year) => (
+        <section>
+          <h2 class="text-xl font-semibold text-ink border-b border-sysu-green pb-1 mb-6">
+            {year}
+          </h2>
+          <ul class="space-y-4">
+            {byYear[year].map((pub) => (
+              <li>
+                <PubItem
+                  title={pub.data.title}
+                  authors={pub.data.authors}
+                  venue={pub.data.venue}
+                  year={pub.data.year}
+                  pdf={pub.data.pdf}
+                  doi={pub.data.doi}
+                  status={pub.data.status}
+                />
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </div>
+  )}
+</Base>
