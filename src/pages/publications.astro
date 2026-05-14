@@ -17,35 +17,62 @@ const years = Object.keys(byYear)
 ---
 
 <Base title="论文" description="朱奕樟发表与在投学术论文列表。">
-  <h1 class="text-3xl font-bold text-ink mb-8">论文</h1>
+  <!-- Hero -->
+  <section style="padding-bottom: 4rem; max-width: 880px; margin-left: auto; margin-right: auto;">
+    <h1
+      style="font-family: var(--font-display); font-size: clamp(2.4rem, 6vw, 3.4rem); font-weight: 500; color: var(--color-ink); letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 0.75rem;"
+    >
+      论文
+    </h1>
+    <p
+      style="font-family: var(--font-serif); font-size: 17px; font-style: italic; color: var(--color-ink-muted); margin: 0; line-height: 1.5;"
+    >
+      博士期间的学术工作（建设中）
+    </p>
+  </section>
 
   {pubs.length === 0 ? (
-    <div class="py-16 text-center text-ink-muted leading-relaxed">
-      <p class="text-lg font-medium">博士期间论文正在准备中，敬请期待。</p>
-      <p class="mt-2 text-sm">相关研究成果将在此陆续更新。</p>
-    </div>
+    <section style="padding: 4rem 0; border-top: 1px solid var(--color-rule);">
+      <p
+        style="font-family: var(--font-serif); font-size: 16px; line-height: 1.9; color: var(--color-ink-muted); font-style: italic; max-width: 560px; margin: 0;"
+      >
+        博士期间的论文工作正在准备中。如果你对当前研究方向感兴趣——时空建模、PHM、量化——欢迎邮件交流。
+      </p>
+      <div style="margin-top: 2rem;">
+        <a
+          href="mailto:zhuyizhang0@gmail.com"
+          style="font-family: var(--font-display); font-size: 13px; font-weight: 500; color: var(--color-accent); letter-spacing: 0.02em; border-bottom: none; transition: opacity 200ms ease;"
+          onmouseover="this.style.opacity='0.75'"
+          onmouseout="this.style.opacity='1'"
+        >
+          → 发邮件联系
+        </a>
+      </div>
+    </section>
   ) : (
-    <div class="space-y-12">
+    <div>
       {years.map((year) => (
-        <section>
-          <h2 class="text-xl font-semibold text-ink border-b border-sysu-green pb-1 mb-6">
-            {year}
-          </h2>
-          <ul class="space-y-4">
+        <section style="padding: 4rem 0; border-top: 1px solid var(--color-rule);">
+          <header style="margin-bottom: 2rem;">
+            <p
+              style="font-family: var(--font-display); font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent); margin: 0;"
+            >
+              § {year}
+            </p>
+          </header>
+          <div>
             {byYear[year].map((pub) => (
-              <li>
-                <PubItem
-                  title={pub.data.title}
-                  authors={pub.data.authors}
-                  venue={pub.data.venue}
-                  year={pub.data.year}
-                  pdf={pub.data.pdf}
-                  doi={pub.data.doi}
-                  status={pub.data.status}
-                />
-              </li>
+              <PubItem
+                title={pub.data.title}
+                authors={pub.data.authors}
+                venue={pub.data.venue}
+                year={pub.data.year}
+                pdf={pub.data.pdf}
+                doi={pub.data.doi}
+                status={pub.data.status}
+              />
             ))}
-          </ul>
+          </div>
         </section>
       ))}
     </div>

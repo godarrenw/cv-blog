@@ -4,3 +4,7 @@
 {"t":0,"agent":"system","event":"skill_invoked","skill_name":"brand-guidelines"}
 {"t":0,"agent":"ae855b8","agent_type":"designer","event":"agent_start","parent_mode":"none"}
 {"t":0,"agent":"ae855b8","agent_type":"designer","event":"agent_stop","success":true,"duration_ms":150043}
+{"t":0,"agent":"hook-ag","agent_type":"unknown","event":"agent_stop","success":true}
+{"t":0,"agent":"ad7d8d9","agent_type":"unknown","event":"agent_stop","success":true}
+{"t":0,"agent":"ace04fa","agent_type":"designer","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"ace04fa","agent_type":"designer","event":"agent_stop","success":true,"duration_ms":148141}

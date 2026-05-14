@@ -1,0 +1,66 @@
+---
+interface Props {
+  src?: string;
+  youtube?: string;
+  bilibili?: string;
+  embed?: string;
+  caption?: string;
+  alt?: string;
+  aspect?: "16/9" | "4/3" | "1/1" | "3/2";
+}
+
+const { src, youtube, bilibili, embed, caption, alt, aspect = "16/9" } = Astro.props;
+
+const isVideo = src && /\.(mp4|webm|mov)$/i.test(src);
+const isImage = src && /\.(png|jpe?g|webp|svg|gif|avif)$/i.test(src);
+
+const youtubeUrl = youtube
+  ? `https://www.youtube-nocookie.com/embed/${youtube}`
+  : null;
+
+const bilibiliUrl = bilibili
+  ? `https://player.bilibili.com/player.html?bvid=${bilibili}&high_quality=1&danmaku=0`
+  : null;
+
+const iframeSrc = youtubeUrl ?? bilibiliUrl ?? embed;
+---
+
+<figure class="my-8 print-block">
+  {isImage && (
+    <img
+      src={src}
+      alt={alt ?? caption ?? ""}
+      class="w-full rounded-md"
+      loading="lazy"
+    />
+  )}
+
+  {isVideo && (
+    <video
+      src={src}
+      controls
+      playsinline
+      preload="metadata"
+      class="w-full rounded-md bg-black"
+    ></video>
+  )}
+
+  {iframeSrc && (
+    <div class={`relative w-full overflow-hidden rounded-md bg-black aspect-[${aspect}]`} style={`aspect-ratio: ${aspect}`}>
+      <iframe
+        src={iframeSrc}
+        class="absolute inset-0 h-full w-full"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        loading="lazy"
+      ></iframe>
+    </div>
+  )}
+
+  {caption && (
+    <figcaption class="mt-2 text-sm text-[color:var(--color-ink-muted)] italic text-center font-[var(--font-serif)]">
+      {caption}
+    </figcaption>
+  )}
+</figure>

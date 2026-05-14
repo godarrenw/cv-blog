@@ -5,25 +5,77 @@ import { getCollection } from "astro:content";
 
 const projects = await getCollection("projects");
 const sorted = projects.sort((a, b) => b.data.year - a.data.year);
+
+const years = [...new Set(sorted.map((p) => p.data.year))].sort((a, b) => b - a);
 ---
 
 <Base title="项目" description="朱奕樟的研究与工程项目列表。">
-  <h1 class="text-3xl font-bold text-ink mb-8">项目</h1>
+  <!-- Hero -->
+  <section style="padding-bottom: 4rem; max-width: 880px; margin-left: auto; margin-right: auto;">
+    <h1
+      style="font-family: var(--font-display); font-size: clamp(2.4rem, 6vw, 3.4rem); font-weight: 500; color: var(--color-ink); letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 0.75rem;"
+    >
+      项目
+    </h1>
+    <p
+      style="font-family: var(--font-serif); font-size: 17px; font-style: italic; color: var(--color-ink-muted); margin: 0; line-height: 1.5;"
+    >
+      博士期间的研究与工程实践
+    </p>
 
+    {years.length > 1 && (
+      <div style="margin-top: 1.75rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+        {years.map((y) => (
+          <a
+            href={`#year-${y}`}
+            style="font-family: var(--font-display); font-size: 13px; font-weight: 500; color: var(--color-ink-muted); letter-spacing: 0.04em; border-bottom: none; transition: color 200ms ease;"
+            onmouseover="this.style.color='var(--color-accent)'"
+            onmouseout="this.style.color='var(--color-ink-muted)'"
+          >
+            {y}
+          </a>
+        ))}
+      </div>
+    )}
+  </section>
+
+  <!-- Project list -->
   {sorted.length === 0 ? (
-    <p class="text-ink-muted py-8">项目正在整理中，敬请期待。</p>
+    <section style="padding: 4rem 0; border-top: 1px solid var(--color-rule);">
+      <p style="font-family: var(--font-serif); font-style: italic; color: var(--color-ink-muted); font-size: 15px;">
+        项目正在整理中，敬请期待。
+      </p>
+    </section>
   ) : (
-    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {sorted.map((project) => (
-        <ProjectCard
-          href={`/projects/${project.id}`}
-          title={project.data.title}
-          summary={project.data.summary}
-          year={project.data.year}
-          tags={project.data.tags}
-          cover={project.data.cover}
-        />
+    <section style="border-top: 1px solid var(--color-rule);">
+      {years.map((year) => (
+        <div id={`year-${year}`} style="padding: 4rem 0; border-bottom: 1px solid var(--color-rule);">
+          <header style="margin-bottom: 2rem;">
+            <p
+              style="font-family: var(--font-display); font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-ink-muted); margin: 0 0 0.5rem;"
+            >
+              § {year}
+            </p>
+          </header>
+          <div style="border-top: 1px solid var(--color-rule);">
+            {sorted
+              .filter((p) => p.data.year === year)
+              .map((project, i) => (
+                <div style="border-bottom: 1px solid var(--color-rule);">
+                  <ProjectCard
+                    href={`/projects/${project.id}`}
+                    title={project.data.title}
+                    summary={project.data.summary}
+                    year={project.data.year}
+                    tags={project.data.tags}
+                    cover={project.data.cover}
+                    index={i}
+                  />
+                </div>
+              ))}
+          </div>
+        </div>
       ))}
-    </div>
+    </section>
   )}
 </Base>
