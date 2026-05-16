@@ -1,7 +1,7 @@
 {
   "tool_name": "Read",
-  "tool_input_preview": "{\"file_path\":\"/Users/zhuyizhang/code/cv-blog/tests/e2e\"}",
-  "error": "EISDIR: illegal operation on a directory, read '/Users/zhuyizhang/code/cv-blog/tests/e2e'",
-  "timestamp": "2026-05-16T17:49:54.026Z",
-  "retry_count": 5
+  "tool_input_preview": "{\"file_path\":\"/Users/zhuyizhang/.claude/projects/-Users-zhuyizhang-code/6ca835c6-2629-4715-aad9-e89ea303f589.jsonl\",\"offset\":0,\"limit\":1000}",
+  "error": "File content (739046 tokens) exceeds maximum allowed tokens (25000). Use offset and limit parameters to read specific portions of the file, or search for specific content instead of reading the whole file.",
+  "timestamp": "2026-05-16T17:57:20.159Z",
+  "retry_count": 2
 }

@@ -97,3 +97,14 @@ npm run build && npx wrangler pages deploy dist --project-name cv-blog --branch 
 - Node version env: `NODE_VERSION=22`
 
 接好后 push 就自动上线，不用手动 wrangler。
+
+## CV PDF 生成
+
+每次重大内容更新（新加项目/论文/荣誉）后跑：
+
+```sh
+npm run pdf
+```
+
+会自动构建、在本地起 preview server、访问 /print 页生成 public/cv.pdf。
+之后 push 即可上线。访问者点页面顶部"下载 CV"按钮会直接拿到这份 PDF（而不是浏览器打印）。

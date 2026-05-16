@@ -74,3 +74,13 @@ src/
 │   └── awards.astro
 └── styles/                  global.css + print.css
 ```
+
+## QR 码用于纸质简历
+
+PNG 高清版位于 `public/qr.png` (1024×1024)，SVG 矢量位于 `public/qr.svg`。
+两者都指向 https://cv-blog.pages.dev。
+
+打印用：直接把 `public/qr.png` 拖到 Word/InDesign 即可。
+线上引用：`<img src="/qr.svg" />`。
+
+域名变更后重新生成：编辑 `scripts/generate-qr.mjs` 顶部 URL 常量，然后 `npm run qr`。

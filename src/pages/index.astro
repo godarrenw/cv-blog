@@ -20,32 +20,79 @@ const recentPubs = allPubs.sort((a, b) => b.data.year - a.data.year).slice(0, 3)
   description="朱奕樟 (Zhu Yizhang)，中山大学先进制造学院硕博连读，导师冯建设。研究关注 PHM、时空建模与量化。"
 >
   <!-- Hero -->
-  <section style="padding-bottom: 4rem; max-width: 880px; margin-left: auto; margin-right: auto;">
-    <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem 2rem; flex-wrap: wrap;">
+  <section style="padding-bottom: 3rem; max-width: 880px; margin-left: auto; margin-right: auto;">
+
+    <!-- Name row -->
+    <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 0.75rem 1.5rem; flex-wrap: wrap; margin-bottom: 0.5rem;">
       <div style="flex: 1; min-width: 0;">
         <h1
-          style="font-family: var(--font-display); font-size: clamp(1.9rem, 6vw, 3.4rem); font-weight: 500; color: var(--color-ink); letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 0.75rem;"
+          style="font-family: var(--font-display); font-size: clamp(1.7rem, 6vw, 3rem); font-weight: 500; color: var(--color-ink); letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 0.35rem;"
         >
-          朱奕樟
+          朱奕樟 <span style="font-size: 0.55em; font-weight: 400; color: var(--color-ink-muted); letter-spacing: 0.01em;">Zhu Yizhang</span>
         </h1>
         <p
-          style="font-family: var(--font-serif); font-size: 17px; font-style: italic; color: var(--color-ink-muted); margin: 0; line-height: 1.5;"
+          style="font-family: var(--font-serif); font-size: 15px; font-style: italic; color: var(--color-ink-muted); margin: 0; line-height: 1.4;"
         >
-          Zhu Yizhang · 中山大学先进制造学院 · 硕博连读
+          中山大学 · 先进制造学院 · 硕博连读 (2024–) &nbsp;|&nbsp; 导师：冯建设
         </p>
       </div>
-      <div class="no-print" style="padding-top: 0.5rem; flex-shrink: 0;">
+      <div class="no-print" style="padding-top: 0.25rem; flex-shrink: 0;">
         <PrintButton label="下载 CV" variant="solid" />
       </div>
     </div>
 
-    <p
-      style="font-family: var(--font-serif); font-size: 17px; line-height: 1.75; color: var(--color-ink); margin: 2.25rem 0 0; max-width: 100%;"
-    >
-      本科毕业于武汉理工大学机电学院智能制造工程专业，目前在中山大学先进制造学院（深圳校区）硕博连读，导师为冯建设教授。
-      当前关注 PHM 故障预测、时空状态空间建模与量化研究，相关代码与笔记会陆续发布在本站。
-    </p>
+    <!-- Research tags -->
+    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0 1.25rem;">
+      {["PHM", "时空建模", "量化研究"].map((tag) => (
+        <span style="font-family: var(--font-display); font-size: 12px; font-weight: 500; letter-spacing: 0.04em; color: var(--color-accent); background: var(--color-accent-soft); border-radius: 4px; padding: 3px 10px; white-space: nowrap;">
+          {tag}
+        </span>
+      ))}
+    </div>
+
+    <!-- Contact action row -->
+    <div class="no-print" style="display: flex; gap: 0.25rem 1.5rem; flex-wrap: wrap; align-items: center; padding: 0.75rem 1rem; background: var(--color-bg-card); border-radius: 8px; border: 1px solid var(--color-rule);">
+      <a
+        id="copy-email-btn"
+        href="mailto:zhuyzh56@mail2.sysu.edu.cn"
+        style="font-family: var(--font-display); font-size: 13px; font-weight: 500; color: var(--color-accent); border-bottom: none; display: inline-flex; align-items: center; gap: 0.3rem; min-height: 36px; padding: 0.25rem 0;"
+        title="点击复制邮箱，长按打开邮件"
+      >
+        → Email
+      </a>
+      <a
+        href="https://github.com/godarrenw"
+        target="_blank"
+        rel="noopener"
+        style="font-family: var(--font-display); font-size: 13px; font-weight: 500; color: var(--color-accent); border-bottom: none; display: inline-flex; align-items: center; gap: 0.3rem; min-height: 36px; padding: 0.25rem 0;"
+      >
+        → GitHub
+      </a>
+      <a
+        href="/cv.pdf"
+        download
+        style="font-family: var(--font-display); font-size: 13px; font-weight: 500; color: var(--color-accent); border-bottom: none; display: inline-flex; align-items: center; gap: 0.3rem; min-height: 36px; padding: 0.25rem 0;"
+      >
+        → 下载 CV (PDF)
+      </a>
+      <span id="copy-confirm" style="font-family: var(--font-display); font-size: 12px; color: var(--color-accent); opacity: 0; transition: opacity 300ms ease; margin-left: 0.5rem;">已复制！</span>
+    </div>
   </section>
+
+  <script>
+    const btn = document.getElementById("copy-email-btn");
+    const confirm = document.getElementById("copy-confirm");
+    btn?.addEventListener("click", (e) => {
+      if (!navigator.clipboard) return;
+      e.preventDefault();
+      navigator.clipboard.writeText("zhuyzh56@mail2.sysu.edu.cn").then(() => {
+        if (confirm) {
+          confirm.style.opacity = "1";
+          setTimeout(() => { confirm.style.opacity = "0"; }, 2000);
+        }
+      });
+    });
+  </script>
 
   <!-- 精选项目 -->
   <section style="padding: 4rem 0;">

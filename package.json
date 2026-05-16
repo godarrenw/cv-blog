@@ -13,7 +13,10 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:lh": "lhci autorun",
-    "test:all": "npm run test:e2e && npm run test:lh"
+    "test:all": "npm run test:e2e && npm run test:lh",
+    "qr": "node scripts/generate-qr.mjs",
+    "pdf:dev": "node scripts/generate-pdf.mjs",
+    "pdf": "npm run build && (npm run preview & sleep 2) && node scripts/generate-pdf.mjs && (lsof -ti:4321 | xargs kill 2>/dev/null || true)"
   },
   "dependencies": {
     "@astrojs/mdx": "^5.0.4",
@@ -27,6 +30,7 @@
   "devDependencies": {
     "@lhci/cli": "^0.15.1",
     "@playwright/test": "^1.60.0",
-    "@resvg/resvg-js": "^2.6.2"
+    "@resvg/resvg-js": "^2.6.2",
+    "qrcode": "^1.5.4"
   }
 }

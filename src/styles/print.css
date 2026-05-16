@@ -1,3 +1,17 @@
+/* /print page: screen hint */
+@media screen {
+  .screen-only {
+    display: block;
+  }
+}
+
+@media print {
+  /* Suppress inline URL expansions on /print page (handled by print.astro styles) */
+  .cv-wrap a[href]::after {
+    content: none !important;
+  }
+}
+
 @media print {
   @page {
     size: A4;

@@ -1,0 +1,472 @@
+---
+import { getCollection } from "astro:content";
+import "../styles/global.css";
+import "../styles/print.css";
+
+const projects = (await getCollection("projects")).sort(
+  (a, b) => b.data.year - a.data.year
+).slice(0, 6);
+
+const publications = (await getCollection("publications")).sort(
+  (a, b) => b.data.year - a.data.year
+);
+
+const awards = (await getCollection("awards")).sort(
+  (a, b) => b.data.year - a.data.year
+);
+
+const buildDate = new Date().toISOString().slice(0, 10);
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>朱奕樟 · CV</title>
+    <meta name="description" content="朱奕樟 (Zhu Yizhang) 个人简历 — 中山大学先进制造学院。" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <style>
+      /* ── Screen base ──────────────────────────────────── */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        background: #faf9f5;
+        color: #141413;
+        font-family: "Lora", "Source Han Serif SC", "Songti SC", serif;
+        font-size: 15px;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .cv-wrap {
+        max-width: 720px;
+        margin: 2rem auto;
+        padding: 0 1.5rem 3rem;
+      }
+
+      /* ── Print hint ───────────────────────────────────── */
+      .screen-only {
+        display: block;
+        background: #e6f0e6;
+        border-left: 3px solid #006600;
+        color: #004d00;
+        font-family: "Poppins", sans-serif;
+        font-size: 12px;
+        padding: 0.55rem 0.9rem;
+        margin-bottom: 1.5rem;
+        border-radius: 2px;
+      }
+
+      /* ── Header ───────────────────────────────────────── */
+      .cv-header {
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+        border-bottom: 2px solid #006600;
+      }
+
+      .cv-name {
+        font-family: "Poppins", "PingFang SC", sans-serif;
+        font-size: 22px;
+        font-weight: 600;
+        color: #006600;
+        letter-spacing: -0.01em;
+        line-height: 1.2;
+      }
+
+      .cv-name-en {
+        font-family: "Poppins", sans-serif;
+        font-size: 13px;
+        font-weight: 400;
+        color: #67665c;
+        margin-top: 2px;
+      }
+
+      .cv-contact {
+        margin-top: 6px;
+        font-family: "Poppins", sans-serif;
+        font-size: 11px;
+        color: #67665c;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px 12px;
+      }
+
+      .cv-contact a {
+        color: #67665c;
+        text-decoration: none;
+        border-bottom: none;
+      }
+
+      /* ── Section ──────────────────────────────────────── */
+      .cv-section {
+        margin-top: 1.1rem;
+      }
+
+      .cv-section-title {
+        font-family: "Poppins", "PingFang SC", sans-serif;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #006600;
+        border-bottom: 1px solid #006600;
+        padding-bottom: 2px;
+        margin-bottom: 0.55rem;
+      }
+
+      /* ── Education ────────────────────────────────────── */
+      .edu-row {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        padding: 3px 0;
+        font-size: 10pt;
+        flex-wrap: wrap;
+      }
+
+      .edu-year {
+        font-family: "Poppins", sans-serif;
+        font-size: 9pt;
+        color: #67665c;
+        min-width: 6rem;
+        flex-shrink: 0;
+      }
+
+      .edu-school {
+        font-family: "Poppins", sans-serif;
+        font-size: 10pt;
+        font-weight: 500;
+        color: #141413;
+      }
+
+      .edu-desc {
+        font-family: "Lora", serif;
+        font-size: 9.5pt;
+        font-style: italic;
+        color: #67665c;
+      }
+
+      /* ── Interests ────────────────────────────────────── */
+      .interests {
+        font-family: "Lora", serif;
+        font-size: 10pt;
+        color: #141413;
+        line-height: 1.7;
+      }
+
+      .interests span.tag {
+        color: #006600;
+        font-weight: 500;
+      }
+
+      /* ── Projects ─────────────────────────────────────── */
+      .project-row {
+        padding: 3px 0;
+        border-bottom: 1px solid #e8e6dc;
+        font-size: 10pt;
+      }
+
+      .project-row:last-child {
+        border-bottom: none;
+      }
+
+      .project-title {
+        font-family: "Poppins", sans-serif;
+        font-size: 10pt;
+        font-weight: 500;
+        color: #141413;
+      }
+
+      .project-year {
+        font-family: "Poppins", sans-serif;
+        font-size: 9pt;
+        color: #67665c;
+        margin-right: 6px;
+      }
+
+      .project-summary {
+        font-family: "Lora", serif;
+        font-size: 9.5pt;
+        color: #67665c;
+        line-height: 1.5;
+      }
+
+      .project-tags {
+        margin-top: 1px;
+        font-family: "Poppins", sans-serif;
+        font-size: 8pt;
+        color: #006600;
+      }
+
+      /* ── Publications ─────────────────────────────────── */
+      .pub-row {
+        padding: 4px 0;
+        border-bottom: 1px solid #e8e6dc;
+        font-size: 10pt;
+      }
+
+      .pub-row:last-child {
+        border-bottom: none;
+      }
+
+      .pub-title {
+        font-family: "Lora", serif;
+        font-size: 10pt;
+        font-weight: 500;
+        color: #141413;
+        line-height: 1.4;
+      }
+
+      .pub-meta {
+        font-family: "Lora", serif;
+        font-size: 9pt;
+        color: #67665c;
+        font-style: italic;
+        line-height: 1.4;
+      }
+
+      .pub-status {
+        display: inline-block;
+        font-family: "Poppins", sans-serif;
+        font-size: 7.5pt;
+        font-style: normal;
+        font-weight: 500;
+        color: #006600;
+        background: #e6f0e6;
+        padding: 0 4px;
+        border-radius: 2px;
+        margin-left: 4px;
+        vertical-align: middle;
+      }
+
+      /* ── Awards ───────────────────────────────────────── */
+      .award-row {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        padding: 3px 0;
+        border-bottom: 1px solid #e8e6dc;
+        flex-wrap: wrap;
+      }
+
+      .award-row:last-child {
+        border-bottom: none;
+      }
+
+      .award-year {
+        font-family: "Poppins", sans-serif;
+        font-size: 9pt;
+        color: #67665c;
+        min-width: 3rem;
+        flex-shrink: 0;
+      }
+
+      .award-title {
+        font-family: "Poppins", sans-serif;
+        font-size: 10pt;
+        font-weight: 500;
+        color: #141413;
+      }
+
+      .award-issuer {
+        font-family: "Lora", serif;
+        font-size: 9.5pt;
+        font-style: italic;
+        color: #67665c;
+      }
+
+      .award-note {
+        font-family: "Lora", serif;
+        font-size: 9pt;
+        color: #67665c;
+        font-style: italic;
+      }
+
+      /* ── Footer ───────────────────────────────────────── */
+      .cv-footer {
+        margin-top: 1.2rem;
+        padding-top: 0.6rem;
+        border-top: 1px solid #e8e6dc;
+        font-family: "Poppins", sans-serif;
+        font-size: 8.5pt;
+        color: #67665c;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+
+      .cv-footer a {
+        color: #67665c;
+        text-decoration: none;
+        border-bottom: none;
+      }
+
+      /* ── Print overrides ──────────────────────────────── */
+      @media print {
+        html,
+        body {
+          background: #fff;
+          font-size: 10pt;
+        }
+
+        .cv-wrap {
+          max-width: 100%;
+          margin: 0;
+          padding: 0;
+        }
+
+        .screen-only {
+          display: none !important;
+        }
+
+        nav,
+        footer,
+        .no-print,
+        .print-hidden {
+          display: none !important;
+        }
+
+        a[href^="http"]::after {
+          content: none !important;
+        }
+
+        .cv-section {
+          break-inside: avoid;
+        }
+      }
+
+      @media screen {
+        .screen-only {
+          display: block;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cv-wrap">
+      <!-- Print hint (screen only) -->
+      <div class="screen-only">
+        按 <strong>Ctrl+P</strong>（Mac: ⌘+P）打印或保存为 PDF &nbsp;·&nbsp; 建议选"更多设置 → 边距：无" 或使用 <code>npm run pdf:dev</code> 脚本生成。
+      </div>
+
+      <!-- Header -->
+      <header class="cv-header">
+        <div class="cv-name">朱奕樟</div>
+        <div class="cv-name-en">Zhu Yizhang</div>
+        <div class="cv-contact">
+          <span>zhuyzh56@mail2.sysu.edu.cn</span>
+          <span>·</span>
+          <a href="https://github.com/godarrenw">github.com/godarrenw</a>
+          <span>·</span>
+          <a href="https://cv-blog.pages.dev">cv-blog.pages.dev</a>
+        </div>
+      </header>
+
+      <!-- Education -->
+      <section class="cv-section">
+        <div class="cv-section-title">Education</div>
+        <div class="edu-row">
+          <span class="edu-year">2024 – 至今</span>
+          <span class="edu-school">中山大学 · 先进制造学院</span>
+          <span class="edu-desc">硕博连读，导师：冯建设</span>
+        </div>
+        <div class="edu-row">
+          <span class="edu-year">2020 – 2024</span>
+          <span class="edu-school">武汉理工大学 · 机电学院</span>
+          <span class="edu-desc">智能制造工程，工学学士（211）</span>
+        </div>
+      </section>
+
+      <!-- Research Interests -->
+      <section class="cv-section">
+        <div class="cv-section-title">Research Interests</div>
+        <p class="interests">
+          <span class="tag">PHM 故障预测与健康管理</span>
+          &nbsp;·&nbsp;
+          <span class="tag">时空状态空间建模</span>
+          &nbsp;·&nbsp;
+          <span class="tag">风电功率预测</span>
+          &nbsp;·&nbsp;
+          <span class="tag">量化研究</span>
+          &nbsp;·&nbsp;
+          深度学习 · 信号处理 · 时序建模
+        </p>
+      </section>
+
+      <!-- Projects -->
+      <section class="cv-section">
+        <div class="cv-section-title">Projects</div>
+        {projects.length === 0 ? (
+          <p class="project-summary" style="padding: 4px 0; font-style: italic;">项目正在整理中</p>
+        ) : (
+          projects.map((p) => (
+            <div class="project-row">
+              <div>
+                <span class="project-year">{p.data.year}</span>
+                <span class="project-title">{p.data.title}</span>
+              </div>
+              <div class="project-summary">{p.data.summary}</div>
+              {p.data.tags.length > 0 && (
+                <div class="project-tags">{p.data.tags.join(" · ")}</div>
+              )}
+            </div>
+          ))
+        )}
+      </section>
+
+      <!-- Publications -->
+      <section class="cv-section">
+        <div class="cv-section-title">Publications</div>
+        {publications.length === 0 ? (
+          <p class="pub-meta" style="padding: 4px 0;">博士期间论文正在准备中</p>
+        ) : (
+          publications.map((pub) => (
+            <div class="pub-row">
+              <div class="pub-title">
+                {pub.data.title}
+                {pub.data.status !== "published" && (
+                  <span class="pub-status">{pub.data.status}</span>
+                )}
+              </div>
+              <div class="pub-meta">
+                {pub.data.authors} · {pub.data.venue} · {pub.data.year}
+              </div>
+            </div>
+          ))
+        )}
+      </section>
+
+      <!-- Awards -->
+      <section class="cv-section">
+        <div class="cv-section-title">Awards &amp; Honors</div>
+        {awards.length === 0 ? (
+          <p class="award-issuer" style="padding: 4px 0;">—</p>
+        ) : (
+          awards.map((aw) => (
+            <div class="award-row">
+              <span class="award-year">{aw.data.year}</span>
+              <span class="award-title">{aw.data.title}</span>
+              <span class="award-issuer">{aw.data.issuer}</span>
+              {aw.data.note && <span class="award-note">({aw.data.note})</span>}
+            </div>
+          ))
+        )}
+      </section>
+
+      <!-- Footer -->
+      <footer class="cv-footer">
+        <span>最后更新：{buildDate}</span>
+        <a href="https://cv-blog.pages.dev">https://cv-blog.pages.dev</a>
+      </footer>
+    </div>
+  </body>
+</html>
