@@ -84,3 +84,62 @@ PNG 高清版位于 `public/qr.png` (1024×1024)，SVG 矢量位于 `public/qr.s
 线上引用：`<img src="/qr.svg" />`。
 
 域名变更后重新生成：编辑 `scripts/generate-qr.mjs` 顶部 URL 常量，然后 `npm run qr`。
+
+## GitHub Actions 自动部署
+
+`.github/workflows/deploy.yml` 在每次推送到 `main` 分支时自动执行：构建 → E2E 测试（门禁）→ 部署到 Cloudflare Pages。
+
+### 配置 GitHub Secrets
+
+在 GitHub 仓库 → **Settings → Secrets and variables → Actions → New repository secret** 中添加以下两个 secret：
+
+| Secret 名称 | 获取方式 |
+| --- | --- |
+| `CLOUDFLARE_API_TOKEN` | Cloudflare Dashboard → My Profile → **API Tokens** → **Create Token** → 选择 "Edit Cloudflare Workers" 模板（包含 Pages 权限）→ 创建并复制 |
+| `CLOUDFLARE_ACCOUNT_ID` | Cloudflare Dashboard 任意 Zone 概览页右侧，或运行 `npx wrangler whoami` 查看。当前值：`890302dd848f7702b490d8a2bed9de73` |
+
+### 工作流步骤说明
+
+1. `actions/checkout@v4` — 拉取代码
+2. `actions/setup-node@v4` (Node 22 + npm 缓存) — 环境准备
+3. `npm ci` — 安装依赖
+4. `npm run build` — Astro 构建输出到 `dist/`
+5. Playwright 安装 + `npm run test:e2e` — **阻塞门禁**，E2E 失败则不部署
+6. `cloudflare/wrangler-action@v3` — 部署 `dist/` 到 Pages 项目 `cv-blog`
+
+### 手动触发
+
+除 push 外，也可在 GitHub → **Actions → Deploy to Cloudflare Pages → Run workflow** 手动触发。
+
+## 域名迁移 zhuyzh.cn
+
+`zhuyzh.cn` 当前绑定在旧项目 `my-website`（VitePress）。要切换到 `cv-blog`，有两种方式：
+
+> **背景**：Cloudflare Pages 不允许同一域名同时绑两个项目，因此必须先从旧项目解绑，再绑到新项目。
+
+### A. 脚本迁移（需要 API Token）
+
+1. 创建 API Token：
+   - 打开 <https://dash.cloudflare.com/profile/api-tokens>
+   - **Create Token** → 选择 **"Edit Cloudflare Workers"** 模板
+   - Account Resources 选择你的账号 → **Continue to summary → Create Token**
+   - 复制生成的 token（只显示一次）
+
+   > 注意：`wrangler whoami` 使用的 OAuth token 无法直接调用 REST API，需单独创建 API token。
+
+2. 运行脚本：
+   ```sh
+   export CLOUDFLARE_API_TOKEN=<粘贴你的token>
+   bash scripts/migrate-domain.sh
+   ```
+
+3. 等 1–2 分钟，访问 <https://zhuyzh.cn> 验证。
+
+### B. Dashboard 手动操作（推荐，无需 token）
+
+1. 打开 <https://dash.cloudflare.com/?to=/:account/pages>
+2. 进入 **`my-website`** 项目 → **Custom domains** → 找到 `zhuyzh.cn` → **Remove**
+3. 进入 **`cv-blog`** 项目 → **Custom domains** → **Set up a custom domain** → 输入 `zhuyzh.cn` → **Activate domain**
+4. DNS 自动更新（同账号同 zone），1–2 分钟生效，无需手动改 DNS 记录。
+
+迁移完成后，建议更新 `astro.config.mjs` 中的 `site` 字段为 `https://zhuyzh.cn` 并重新部署，sitemap 和 canonical URL 会自动更新。
