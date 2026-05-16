@@ -6,7 +6,7 @@ const items = await getCollection("awards");
 const sorted = items.sort((a, b) => b.data.year - a.data.year);
 ---
 
-<Base title="荣誉" description="朱奕樟获得的奖项与荣誉列表。">
+<Base title="荣誉" description="朱奕樟在学期间获得的荣誉与奖学金。">
   <!-- Hero -->
   <section style="padding-bottom: 4rem; max-width: 880px; margin-left: auto; margin-right: auto;">
     <h1
@@ -26,14 +26,14 @@ const sorted = items.sort((a, b) => b.data.year - a.data.year);
     {sorted.length === 0 ? (
       <div style="padding: 4rem 0;">
         <p
-          style="font-family: var(--font-serif); font-size: 16px; line-height: 1.9; color: var(--color-ink-muted); font-style: italic; max-width: 560px; margin: 0;"
+          style="font-family: var(--font-serif); font-size: 16px; line-height: 1.9; color: var(--color-ink-muted); font-style: italic; max-width: 100%; margin: 0;"
         >
           获奖记录正在整理中。如有合作或交流意向，欢迎邮件联系。
         </p>
         <div style="margin-top: 2rem;">
           <a
             href="mailto:zhuyizhang0@gmail.com"
-            style="font-family: var(--font-display); font-size: 13px; font-weight: 500; color: var(--color-accent); letter-spacing: 0.02em; border-bottom: none; transition: opacity 200ms ease;"
+            style="font-family: var(--font-display); font-size: 13px; font-weight: 500; color: var(--color-accent); letter-spacing: 0.02em; border-bottom: none; transition: opacity 200ms ease; display: inline-flex; align-items: center; min-height: 44px;"
             onmouseover="this.style.opacity='0.75'"
             onmouseout="this.style.opacity='1'"
           >
@@ -63,7 +63,7 @@ const sorted = items.sort((a, b) => b.data.year - a.data.year);
               {item.data.issuer}
             </span>
             {item.data.note && (
-              <div style="width: 100%; padding-left: calc(3rem + 0.75rem + 0.75rem + 0.75rem);">
+              <div style="width: 100%; padding-left: 3.75rem;">
                 <span
                   style="font-family: var(--font-serif); font-size: 13px; font-style: italic; color: var(--color-ink-muted);"
                 >

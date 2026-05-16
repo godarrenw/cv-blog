@@ -1,7 +1,7 @@
 {
-  "tool_name": "Bash",
-  "tool_input_preview": "{\"command\":\"rm -f src/content/projects/*.mdx src/content/projects/*.md && touch src/content/projects/.gitkeep && mkdir -p public/projects && touch public/projects/.gitkeep && ls src/content/projects/ ...",
-  "error": "Exit code 1\n(eval):1: no matches found: src/content/projects/*.md",
-  "timestamp": "2026-05-14T08:39:17.993Z",
-  "retry_count": 1
+  "tool_name": "Read",
+  "tool_input_preview": "{\"file_path\":\"/Users/zhuyizhang/code/cv-blog/tests/e2e\"}",
+  "error": "EISDIR: illegal operation on a directory, read '/Users/zhuyizhang/code/cv-blog/tests/e2e'",
+  "timestamp": "2026-05-16T17:49:54.026Z",
+  "retry_count": 5
 }

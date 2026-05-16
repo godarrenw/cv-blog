@@ -6,9 +6,46 @@ import "../styles/global.css";
 interface Props {
   title: string;
   description?: string;
+  ogImage?: string;
+  ogType?: string;
+  structuredData?: object;
 }
 
-const { title, description } = Astro.props;
+const {
+  title,
+  description = "朱奕樟（Zhu Yizhang）个人学术主页：中山大学先进制造学院硕博连读，研究 PHM、时空建模与量化。",
+  ogImage = "/og-default.png",
+  ogType = "website",
+} = Astro.props;
+
+const siteUrl = "https://cv-blog.pages.dev";
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
+const fullOgImage = new URL(ogImage, siteUrl).href;
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "朱奕樟",
+  "alternateName": "Zhu Yizhang",
+  "url": siteUrl,
+  "image": fullOgImage,
+  "jobTitle": "PhD Student",
+  "affiliation": {
+    "@type": "EducationalOrganization",
+    "name": "Sun Yat-sen University, School of Advanced Manufacturing",
+    "url": "https://sam.sysu.edu.cn"
+  },
+  "alumniOf": {
+    "@type": "EducationalOrganization",
+    "name": "Wuhan University of Technology",
+    "url": "https://www.whut.edu.cn"
+  },
+  "email": "mailto:zhuyzh56@mail2.sysu.edu.cn",
+  "sameAs": [
+    "https://github.com/godarrenw"
+  ],
+  "knowsAbout": ["PHM", "时空建模", "量化交易", "状态空间模型"]
+};
 ---
 
 <!doctype html>
@@ -18,8 +55,29 @@ const { title, description } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#faf9f5" />
     <title>{title}</title>
-    {description && <meta name="description" content={description} />}
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={fullOgImage} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content="朱奕樟" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={fullOgImage} />
+
+    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
   </head>
   <body>
     <Nav />

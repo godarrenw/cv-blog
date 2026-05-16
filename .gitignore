@@ -5,3 +5,6 @@ dist
 .env
 .env.production
 .wrangler
+test-results/
+playwright-report/
+.lighthouseci/
