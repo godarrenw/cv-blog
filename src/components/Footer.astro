@@ -1,4 +1,5 @@
 ---
+const buildDate = new Date().toISOString().split("T")[0];
 ---
 
 <footer
@@ -27,6 +28,11 @@
     >
       GitHub
     </a>
+    <span
+      style="font-family: var(--font-display); font-size: 13px; letter-spacing: 0.03em; color: var(--color-ink-muted);"
+    >
+      最后构建: {buildDate}
+    </span>
     <span
       style="font-family: var(--font-display); font-size: 13px; letter-spacing: 0.03em; color: var(--color-ink-muted);"
     >

@@ -1,0 +1,131 @@
+---
+import Base from "../layouts/Base.astro";
+
+const now = new Date();
+const lastUpdated = now.toISOString().split("T")[0];
+---
+
+<Base
+  title="Now — 朱奕樟"
+  description="朱奕樟现在正在做的事、在读的、关注的方向。灵感来自 nownownow.com。"
+>
+  <section
+    style="padding-bottom: 4rem; max-width: 880px; margin-left: auto; margin-right: auto;"
+  >
+    <h1
+      style="font-family: var(--font-display); font-size: clamp(2.4rem, 6vw, 3.4rem); font-weight: 500; color: var(--color-ink); letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 0.75rem;"
+    >
+      Now
+    </h1>
+    <p
+      style="font-family: var(--font-serif); font-size: 17px; font-style: italic; color: var(--color-ink-muted); margin: 0; line-height: 1.5;"
+    >
+      现在正在做的事 — 灵感来自 <a
+        href="https://nownownow.com/about"
+        target="_blank"
+        rel="noopener"
+        style="color: var(--color-ink-muted); border-bottom: 1px dotted var(--color-ink-muted);"
+      >nownownow.com</a>
+    </p>
+
+    <p
+      style="font-family: var(--font-serif); font-size: 17px; line-height: 1.75; color: var(--color-ink); margin: 2rem 0 0; max-width: 100%;"
+    >
+      这里记录我现阶段在投入的几件事，不定期更新。如果太久没改提醒我，说明我又忙到忘了同步。
+    </p>
+  </section>
+
+  <section style="padding: 4rem 0; border-top: 1px solid var(--color-rule);">
+    <header style="margin-bottom: 2rem;">
+      <p
+        style="font-family: var(--font-display); font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-ink-muted); margin: 0 0 0.5rem;"
+      >
+        § 01
+      </p>
+      <h2
+        style="font-family: var(--font-display); font-size: 15px; font-weight: 600; color: var(--color-ink); margin: 0; letter-spacing: 0.02em; text-transform: uppercase;"
+      >
+        正在做
+      </h2>
+    </header>
+
+    <ul
+      style="list-style: none; padding: 0; margin: 0; font-family: var(--font-serif); font-size: 17px; line-height: 1.85;"
+    >
+      <li style="padding: 0.6rem 0; border-bottom: 1px solid var(--color-rule);">
+        <span style="color: var(--color-accent); font-weight: 500;">STEC 模型</span>
+        <span style="color: var(--color-ink-muted);"> — 海上风速时空预测，论文 revision 中</span>
+      </li>
+      <li style="padding: 0.6rem 0; border-bottom: 1px solid var(--color-rule);">
+        <span style="color: var(--color-accent); font-weight: 500;">PHM-EU-2026 基准复现</span>
+        <span style="color: var(--color-ink-muted);"> — 先进制造故障预测赛道</span>
+      </li>
+      <li style="padding: 0.6rem 0; border-bottom: 1px solid var(--color-rule);">
+        <span style="color: var(--color-accent); font-weight: 500;">这个简历站点</span>
+        <span style="color: var(--color-ink-muted);"> — 你正在看的就是</span>
+      </li>
+      <li style="padding: 0.6rem 0; border-bottom: 1px solid var(--color-rule);">
+        <span style="color: var(--color-accent); font-weight: 500;">量化策略调研笔记</span>
+        <span style="color: var(--color-ink-muted);"> — 业余时间</span>
+      </li>
+    </ul>
+  </section>
+
+  <section style="padding: 4rem 0; border-top: 1px solid var(--color-rule);">
+    <header style="margin-bottom: 2rem;">
+      <p
+        style="font-family: var(--font-display); font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-ink-muted); margin: 0 0 0.5rem;"
+      >
+        § 02
+      </p>
+      <h2
+        style="font-family: var(--font-display); font-size: 15px; font-weight: 600; color: var(--color-ink); margin: 0; letter-spacing: 0.02em; text-transform: uppercase;"
+      >
+        在读
+      </h2>
+    </header>
+
+    <p
+      style="font-family: var(--font-serif); font-style: italic; color: var(--color-ink-muted); font-size: 16px; line-height: 1.7; margin: 0;"
+    >
+      占位：Mamba / 状态空间模型相关论文、PHM 综述、《概率论沉思录》。具体清单后续整理。
+    </p>
+  </section>
+
+  <section style="padding: 4rem 0; border-top: 1px solid var(--color-rule);">
+    <header style="margin-bottom: 2rem;">
+      <p
+        style="font-family: var(--font-display); font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-ink-muted); margin: 0 0 0.5rem;"
+      >
+        § 03
+      </p>
+      <h2
+        style="font-family: var(--font-display); font-size: 15px; font-weight: 600; color: var(--color-ink); margin: 0; letter-spacing: 0.02em; text-transform: uppercase;"
+      >
+        关注的方向
+      </h2>
+    </header>
+
+    <p
+      style="font-family: var(--font-serif); font-size: 16px; line-height: 1.85; color: var(--color-ink); margin: 0;"
+    >
+      <span style="color: var(--color-accent); font-weight: 500;">时空状态空间模型</span>
+      <span style="color: var(--color-ink-muted); margin: 0 0.6rem;">·</span>
+      <span style="color: var(--color-accent); font-weight: 500;">工业大数据 PHM</span>
+      <span style="color: var(--color-ink-muted); margin: 0 0.6rem;">·</span>
+      <span style="color: var(--color-accent); font-weight: 500;">量化研究</span>
+      <span style="color: var(--color-ink-muted); margin: 0 0.6rem;">·</span>
+      <span style="color: var(--color-ink-muted);">大模型在科研工程中的应用</span>
+    </p>
+  </section>
+
+  <section
+    style="padding: 4rem 0 2rem; border-top: 1px solid var(--color-rule);"
+  >
+    <p
+      style="font-family: var(--font-display); font-size: 13px; color: var(--color-ink-muted); margin: 0;"
+    >
+      最后更新: {lastUpdated}
+    </p>
+  </section>
+</Base>

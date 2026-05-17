@@ -1,5 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
+import { Image } from "astro:assets";
 import { getCollection, render } from "astro:content";
 
 export async function getStaticPaths() {
@@ -50,9 +51,13 @@ const { title, year, tags, cover, repo, demo, summary } = project.data;
     <!-- Cover image -->
     {cover && (
       <div style="margin-bottom: 3rem;">
-        <img
+        <Image
           src={cover}
           alt={title}
+          widths={[400, 800, 1200]}
+          sizes="(max-width: 768px) 100vw, 680px"
+          loading="lazy"
+          decoding="async"
           style="width: 100%; max-height: 320px; object-fit: cover; display: block;"
         />
       </div>
